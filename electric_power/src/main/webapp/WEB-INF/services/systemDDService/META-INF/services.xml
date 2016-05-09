@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<serviceGroup>
+    <!--发布服务-->
+    <service name="systemDDService">
+        <parameter name="ServiceClass">electric.serviceImpl.WebSystemDDServiceImpl</parameter>
+        <operation name="findSystemDDByKeyword">
+            <messageReceiver class="org.apache.axis2.rpc.receivers.RPCMessageReceiver"/>
+        </operation>
+    </service>
+</serviceGroup>

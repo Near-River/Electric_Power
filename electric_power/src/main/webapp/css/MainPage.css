@@ -1,0 +1,77 @@
+A:visited {
+    color: "#003366";
+    text-decoration: none;
+}
+
+A:active {
+    color: "#0033cc";
+    text-decoration: none;
+}
+
+A:hover {
+    color: "#ff0000";
+    text-decoration: underline;
+}
+
+A:link {
+    color: "#003399";
+    text-decoration: none;
+}
+
+BODY {
+    FONT-SIZE: 9pt;
+    SCROLLBAR-FACE-COLOR: #f6f6f6;
+    FONT-SIZE: 9pt;
+    SCROLLBAR-HIGHLIGHT-COLOR: #ffffff;
+    SCROLLBAR-SHADOW-COLOR: #cccccc;
+    SCROLLBAR-3DLIGHT-COLOR: #cccccc;
+    SCROLLBAR-ARROW-COLOR: #330000;
+    SCROLLBAR-TRACK-COLOR: #f6f6f6;
+    SCROLLBAR-DARKSHADOW-COLOR: #ffffff;
+}
+
+TD {
+    FONT-SIZE: 9pt;
+    color: "#003366";
+}
+
+DIV {
+    FONT-SIZE: 9pt;
+}
+
+FORM {
+    FONT-SIZE: 9pt;
+}
+
+OPTION {
+    FONT-SIZE: 9pt;
+}
+
+P {
+    FONT-SIZE: 9pt;
+}
+
+BR {
+    FONT-SIZE: 9pt;
+}
+
+INPUT {
+    PADDING-RIGHT: 1px;
+    PADDING-LEFT: 1px;
+    FONT-SIZE: 9pt;
+    PADDING-BOTTOM: 1px;
+    PADDING-TOP: 1px;
+    border: 1px #cccccc;
+}
+
+textarea {
+    border: 1 #000000;
+    background-color: #FFFFFF;
+    font-size: 9pt;
+}
+
+select {
+    border: 1 #000000;
+    font-size: 9pt;
+    font-style: bold;
+}

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 自动扫描包 -->
+    <context:component-scan base-package="electric"/>
+    <!-- 启动注解 -->
+    <context:annotation-config/>
+    <!--读取数据库的配置文件-->
+    <context:property-placeholder location="classpath:config/jdbc.properties"/>
+    <!-- 配置 datasource -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+        <property name="driverClass" value="${jdbc_driverName}"/>
+        <property name="jdbcUrl" value="${jdbc_url}"/>
+        <property name="user" value="${jdbc_username}"/>
+        <property name="password" value="${jdbc_password}"/>
+        <!-- 连接池启动时的初始值 -->
+        <property name="initialPoolSize" value="10"/>
+        <!-- 连接池的最大连接数 -->
+        <property name="maxPoolSize" value="100"/>
+        <!-- 连接池的最小连接数 -->
+        <property name="minPoolSize" value="10"/>
+        <!-- 最大空闲时间 -->
+        <property name="maxIdleTime" value="1800"/>
+        <!-- 当连接池中的连接耗尽的时 c3p0一次同时获取的连接数 -->
+        <property name="acquireIncrement" value="3"/>
+        <!-- 控制数据源内加载的PreparedStatements数量
+             如果maxStatements与maxStatementsPerConnection均为0，则缓存被关闭
+        -->
+        <property name="maxStatements" value="8"/>
+        <!-- 连接池内单个连接所拥有的最大缓存statements数 -->
+        <property name="maxStatementsPerConnection" value="5"/>
+    </bean>
+    <!--配置 hibernate 的 SessionFactory-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.MySQL5InnoDBDialect</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <!--开启二级缓存-->
+                <prop key="hibernate.cache.use_second_level_cache">true</prop>
+                <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop>
+                <prop key="hibernate.cache.use_query_cache">true</prop>
+            </props>
+        </property>
+        <property name="packagesToScan" value="electric.entity"/>
+    </bean>
+    <!-- 配置事务管理器 -->
+    <bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <!-- 启动注解声明式事务管理 -->
+    <tx:annotation-driven transaction-manager="txManager" proxy-target-class="true"/>
+</beans>

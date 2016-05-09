@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+        "http://struts.apache.org/dtds/struts-2.3.dtd">
+<struts>
+    <constant name="struts.action.extension" value="action"/>
+    <constant name="struts.ui.theme" value="simple"/>
+    <constant name="struts.objectFactory" value="spring"/>
+    <constant name="struts.devMode" value="true"/>
+
+    <package name="System_Manage" extends="json-default" namespace="/system">
+        <interceptors>
+            <interceptor name="checkPrivilege" class="electric.filter.PrivilegeInteceptor"/>
+            <interceptor name="exInterceptor" class="electric.filter.ExceptionInteceptor"/>
+            <interceptor-stack name="MyStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="checkPrivilege"/>
+                <interceptor-ref name="exInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="MyStack"/>
+
+        <global-results>
+            <result name="close">/close.jsp</result>
+            <result name="errorMsg">/errorMsg.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="errorMsg"/>
+        </global-exception-mappings>
+
+        <action name="menuManage_*" class="menuAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/menu/{1}.jsp</result>
+            <result name="error">/index.jsp</result>
+            <result name="logout" type="redirect">/index.jsp</result>
+            <result name="showMenu" type="json">
+                <param name="root">menuList</param>
+            </result>
+        </action>
+        <action name="commonMsg_*" class="commonMsgAction" method="{1}">
+            <result name="home">/WEB-INF/jsp/system/actingIndex.jsp</result>
+            <result name="toHome" type="redirectAction">commonMsg_home.action</result>
+        </action>
+        <action name="exportExcel_*" class="exportExcelAction" method="{1}">
+            <result name="{1}">/WEB-INF/jsp/system/exportExcel.jsp</result>
+        </action>
+        <action name="systemDD_*" class="systemDDAction" method="{1}">
+            <result name="index">/WEB-INF/jsp/system/dictionaryIndex.jsp</result>
+            <result name="edit">/WEB-INF/jsp/system/dictionaryEdit.jsp</result>
+            <result name="save" type="redirectAction">systemDD_index.action</result>
+        </action>
+        <action name="userManage_*" class="userAction" method="{1}">
+            <result name="index">/WEB-INF/jsp/system/userIndex.jsp</result>
+            <result name="add">/WEB-INF/jsp/system/userAdd.jsp</result>
+            <result name="edit">/WEB-INF/jsp/system/userEdit.jsp</result>
+            <result name="delete" type="redirectAction">userManage_index.action</result>
+            <result name="findJctUnit" type="json"/>
+            <result name="checkUser" type="json"/>
+            <result name="exportExcel" type="stream">
+                <param name="contentType">application/vnd.ms-excel</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${fileName}"</param>
+                <param name="bufferSize">1024</param>
+            </result>
+            <result name="importPage">/WEB-INF/jsp/system/userImport.jsp</result>
+            <result name="chart">/WEB-INF/jsp/system/userReport.jsp</result>
+            <result name="chartFCF">/WEB-INF/jsp/system/userReportFCF.jsp</result>
+        </action>
+        <action name="roleManage_*" class="roleAction" method="{1}">
+            <result name="index">/WEB-INF/jsp/system/roleIndex.jsp</result>
+            <result name="edit">/WEB-INF/jsp/system/roleEdit.jsp</result>
+            <result name="save" type="redirectAction">roleManage_index.action</result>
+        </action>
+    </package>
+
+    <package name="FileUpload_Manage" extends="struts-default" namespace="/dataChart">
+        <interceptors>
+            <interceptor name="checkPrivilege" class="electric.filter.PrivilegeInteceptor"/>
+            <interceptor name="exInterceptor" class="electric.filter.ExceptionInteceptor"/>
+            <interceptor-stack name="MyStack">
+                <interceptor-ref name="defaultStack"/>
+                <interceptor-ref name="checkPrivilege"/>
+                <interceptor-ref name="exInterceptor"/>
+            </interceptor-stack>
+        </interceptors>
+        <default-interceptor-ref name="MyStack"/>
+
+        <global-results>
+            <result name="close">/close.jsp</result>
+            <result name="errorMsg">/errorMsg.jsp</result>
+        </global-results>
+        <global-exception-mappings>
+            <exception-mapping exception="java.lang.Exception" result="errorMsg"/>
+        </global-exception-mappings>
+
+        <action name="fileManage_*" class="fileUploadAction" method="{1}">
+            <result name="index">/WEB-INF/jsp/dataChart/dataChartIndex.jsp</result>
+            <result name="add">/WEB-INF/jsp/dataChart/dataChartAdd.jsp</result>
+            <result name="addList">/WEB-INF/jsp/dataChart/dataChartAddList.jsp</result>
+            <result name="reIndex" type="redirectAction">fileManage_index.action</result>
+            <result name="download" type="stream">
+                <param name="contentType">application/octet-stream</param>
+                <param name="inputName">inputStream</param>
+                <param name="contentDisposition">attachment;filename="${downloadFileName}"</param>
+                <param name="bufferSize">8192</param>
+            </result>
+        </action>
+    </package>
+</struts>

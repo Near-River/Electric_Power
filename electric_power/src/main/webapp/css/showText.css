@@ -1,0 +1,36 @@
+.clsShowInfoWindow {
+    FONT-SIZE: smaller;
+    font-family: Verdana, Arial, Helvetica,serif;
+    Z-INDEX: 101;
+    WIDTH: 260px;
+    COLOR: #000000;
+    padding: 0em;
+    border: 3px solid #8AB3F4;
+    position: absolute;
+    BACKGROUND-COLOR: #CEE0EB;
+    table-layout: fixed;
+    word-break: break-all
+}
+
+table.tableBorderStyle {
+    border: 0px #ffffff;
+    border-top-style: solid;
+    border-right-style: solid;
+    margin: 1px;
+    text-align: center
+}
+
+td.tdBorderStyle {
+    border: 1px solid #666666;
+    text-align: center
+}
+
+.scrollStyle {
+    width: 100%;
+    height: 15px;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: left;
+    word-break: break-all;
+    word-wrap: break-word
+}

@@ -1,0 +1,28 @@
+<ehcache>
+    <diskStore path="java.io.tmpdir"/>
+    <!--
+        maxElementsInMemory：设置最大存放对象的数量
+        eternal：设置是否永久存储
+        timeToLiveSeconds：设置对象的存活时间
+        timeToIdleSeconds：设置对象空闲时间
+        overflowToDisk：内存溢出是否写入磁盘
+    -->
+    <defaultCache
+            maxElementsInMemory="10000"
+            eternal="true"
+            overflowToDisk="true"
+            maxElementsOnDisk="10000000"
+            diskPersistent="false"
+            diskExpiryThreadIntervalSeconds="120"
+            memoryStoreEvictionPolicy="LRU"
+    />
+    <!--
+        <defaultCache
+                maxElementsInMemory="10000"
+                eternal="false"
+                timeToIdleSeconds="120"
+                timeToLiveSeconds="120"
+                overflowToDisk="true"
+        />
+    -->
+</ehcache>
